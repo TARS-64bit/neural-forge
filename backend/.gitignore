@@ -1,0 +1,22 @@
+# Environment Variables (CRITICAL)
+.env
+.env.*
+!.env.example
+
+# Python & Virtual Environments
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# AutoGen & Execution Workspaces
+# (Prevents pushing the AI's test scripts and logs to GitHub)
+workspace/
+autogen.log
+coding/
+
+# Database
+*.sqlite3
+*.db
