@@ -1,7 +1,7 @@
 from agent_framework import Agent
-from src.neural_forge_app.ai_service.agents.refinement_agent.instructions import build_refinement_instructions
-from src.neural_forge_app.ai_service.core.get_foundary_client import get_foundary_client
-from src.neural_forge_app.ai_service.agents.pm_agent.models import InitialTaskList
+from neural_forge_app.ai_service.agents.refinement_agent.instructions import build_refinement_instructions
+from neural_forge_app.ai_service.core.get_foundary_client import get_foundary_client
+from neural_forge_app.ai_service.agents.pm_agent.models import InitialTaskList
 
 def create_refinement_agent():
     client = get_foundary_client()

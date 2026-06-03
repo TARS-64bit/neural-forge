@@ -1,8 +1,8 @@
-# from src.neural_forge_app.agents.pm_agent.helpers import splice_and_remap_tasks
-# from src.neural_forge_app.agents.pm_agent.models import Plan, Task, TaskList
+# from neural_forge_app.agents.pm_agent.helpers import splice_and_remap_tasks
+# from neural_forge_app.agents.pm_agent.models import Plan, Task, TaskList
 
-# from src.neural_forge_app.agents.tech_lead_agent.agent import TechLeadAgent
-# from src.neural_forge_app.agents.pm_agent.agent import PMAgent
+# from neural_forge_app.agents.tech_lead_agent.agent import TechLeadAgent
+# from neural_forge_app.agents.pm_agent.agent import PMAgent
 
 # async def refine_project_plan(max_loops: int, plan: Plan | None, pm_agent: PMAgent
 # ,  tech_lead: TechLeadAgent):
