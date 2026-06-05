@@ -5,8 +5,8 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-PROJECT_ENDPOINT = os.getenv("FOUNDRY_PROJECT_ENDPOINT")
-MODEL = os.getenv("FOUNDRY_MODEL", "gpt-4.1-mini")
+PROJECT_ENDPOINT = os.getenv("PROJECT_ENDPOINT")
+MODEL = os.getenv("AGENT_MODEL", "gpt-4.1-mini")
 
 def get_foundary_client():
     return FoundryChatClient(
