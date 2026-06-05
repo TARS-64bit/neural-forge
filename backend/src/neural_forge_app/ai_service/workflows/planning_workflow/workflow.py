@@ -5,7 +5,7 @@ from agent_framework import (
 )
 from neural_forge_app.ai_service.agents.refinement_agent.agent import create_refinement_agent
 from neural_forge_app.ai_service.agents.pm_agent.agent import create_pm_agent
-from neural_forge_app.ai_service.agents.pm_agent.models import Plan
+from neural_forge_app.ai_service.models.shared_responses import Plan
 from neural_forge_app.ai_service.agents.tech_lead_agent.agent import create_tech_lead_agent
 from neural_forge_app.ai_service.workflows.planning_workflow.state.planning_state import (
     POPrompt,

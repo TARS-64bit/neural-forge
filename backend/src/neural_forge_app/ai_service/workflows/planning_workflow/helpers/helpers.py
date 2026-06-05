@@ -1,4 +1,4 @@
-from neural_forge_app.ai_service.agents.pm_agent.models import Task
+from neural_forge_app.ai_service.models.shared_responses import Task
 
 def splice_and_remap_tasks(
     plan_tasks: list[Task], 

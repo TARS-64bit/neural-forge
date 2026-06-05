@@ -4,7 +4,6 @@ from neural_forge_app.ai_service.agents.tech_lead_agent.instructions import buil
 from neural_forge_app.ai_service.core.get_foundary_client import get_foundary_client
 from neural_forge_app.ai_service.agents.tech_lead_agent.models import TechLeadEvaluation
 
-
 def create_tech_lead_agent():
     client = get_foundary_client()
     return Agent(
@@ -13,11 +12,6 @@ def create_tech_lead_agent():
         instructions=build_tech_lead_instructions(),
         default_options={"response_format": TechLeadEvaluation}, # type: ignore
     )
-
-    # def evaluate_task_atomicity(self, task_title: str) -> Awaitable[AgentResponse[TechLeadEvaluation]]:
-    #     print(f"/nEvaluating atomicity of task: {task_title}/n")
-    #     return self.agent.run(f"""Task.title: {task_title}""", options={"response_format": TechLeadEvaluation})
-
     
 
 

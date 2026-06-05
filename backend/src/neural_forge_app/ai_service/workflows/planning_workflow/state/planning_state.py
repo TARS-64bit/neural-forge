@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Any, Literal, List
 
-from neural_forge_app.ai_service.agents.pm_agent.models import Task
+from neural_forge_app.ai_service.models.shared_responses import Task
 
 # Shared state and helper utilities for the planning workflow.
 
@@ -110,7 +110,7 @@ def transform_initial_plan_to_plan(initial_plan: Any) -> Any:
     and `Plan` from the PM agent models as needed.
     """
     # Defer imports to avoid module-level cycles
-    from neural_forge_app.ai_service.agents.pm_agent.models import InitialPlan, Plan
+    from neural_forge_app.ai_service.models.shared_responses import InitialPlan, Plan
 
     if not isinstance(initial_plan, InitialPlan):
         raise ValueError("expected InitialPlan")

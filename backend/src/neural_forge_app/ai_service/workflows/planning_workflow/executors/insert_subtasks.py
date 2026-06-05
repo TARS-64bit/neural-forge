@@ -1,7 +1,7 @@
 import logging
 from agent_framework import AgentExecutorResponse, WorkflowContext, executor
 from neural_forge_app.ai_service.workflows.planning_workflow.state.planning_state import TaskIterationState
-from neural_forge_app.ai_service.agents.pm_agent.models import Plan
+from neural_forge_app.ai_service.models.shared_responses import Plan
 
 logger = logging.getLogger(__name__)
 
