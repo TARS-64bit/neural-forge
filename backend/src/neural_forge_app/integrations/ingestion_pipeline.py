@@ -12,7 +12,7 @@ azure_openai_embedding_deployment = os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT
 azure_openai_embedding_model = os.getenv("AZURE_OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
 
 # Import only your index builder and uploader
-from ..ai_service.tools.azure_agentic_search.config import index_name
+from neural_forge_app.ai_service.core.config import index_name
 from .index_builder import build_and_create_index
 from .uploader import upload_code
 

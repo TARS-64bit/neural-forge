@@ -6,7 +6,7 @@ from azure.search.documents.indexes.models import (
     SemanticSearch, VectorSearch, VectorSearchProfile
 )
 
-from ..ai_service.tools.azure_agentic_search.config import (
+from neural_forge_app.ai_service.core.config import (
     endpoint, credential, index_name,
     azure_openai_endpoint, azure_openai_embedding_deployment,
     azure_openai_embedding_model

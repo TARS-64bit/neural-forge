@@ -1,6 +1,6 @@
 from azure.search.documents import SearchIndexingBufferedSender
 
-from ..ai_service.tools.azure_agentic_search.config import endpoint, credential, index_name
+from  neural_forge_app.ai_service.core.config import endpoint, credential, index_name
 
 
 def upload_code(code_chunks: list | None = None) -> None:
