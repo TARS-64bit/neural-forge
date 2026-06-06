@@ -6,8 +6,6 @@ load_dotenv()
 
 from neural_forge_app.ai_service.rag.models import CodeChunk
 
-# Setup Azure OpenAI Client
-print("\nAZURE_OPENAI_KEY:", os.getenv("AZURE_OPENAI_KEY"), "\n\n")
 oai_client = AzureOpenAI(
     api_key=os.getenv("AZURE_OPENAI_KEY"),
     api_version="2024-02-01",

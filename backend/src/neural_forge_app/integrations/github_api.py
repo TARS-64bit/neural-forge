@@ -12,6 +12,10 @@ def ephemeral_clone(repo_owner: str, repo_name: str, branch: str = "main"):
     Clones a GitHub repo into a temporary, isolated directory on the server.
     Cleans up automatically when the process is done.
     """
+    # Remove .git suffix if present to avoid duplication
+    if repo_name.endswith(".git"):
+        repo_name = repo_name[:-4]
+    
     # 1. Construct a secure HTTPS URL using the Personal Access Token (PAT)
     # This prevents the need to store SSH keys on the server
     repo_url = f"https://{GITHUB_PAT}@github.com/{repo_owner}/{repo_name}.git"

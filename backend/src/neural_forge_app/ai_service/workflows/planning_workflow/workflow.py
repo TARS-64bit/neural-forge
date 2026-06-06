@@ -5,7 +5,7 @@ from agent_framework import (
 )
 from neural_forge_app.ai_service.agents.refinement_agent.agent import create_refinement_agent
 from neural_forge_app.ai_service.agents.pm_agent.agent import create_pm_agent
-from neural_forge_app.ai_service.models.shared_responses import Plan
+from neural_forge_app.ai_service.models.shared_responses import InitialPlan
 from neural_forge_app.ai_service.agents.tech_lead_agent.agent import create_tech_lead_agent
 from neural_forge_app.ai_service.workflows.planning_workflow.state.planning_state import (
     POPrompt,
@@ -85,22 +85,7 @@ workflow = (
     .build()
 )
 
-# async def generate_initial_plan(pm_agent: PMAgent, po_prompt: str) -> Plan | None:
-#     """
-#     Acts as a factory: Returns a mock plan if in local/testing mode, 
-#     otherwise makes the real LLM call.
-#     """
-#     if is_mock_mode():
-#         print("🟡 CONFIG: Running in MOCK mode. Returning golden dataset.")
-#         # Lazy import: Only loads the mock file if we actually need it
-#         from neural_forge_app.agents.pm_agent.mocks import get_mock_initial_plan
-#         return get_mock_initial_plan()
-    
-#     print("🟢 CONFIG: Running in PROD mode. Calling real PM Agent...")
-#     response = await pm_agent.generate_plan(po_prompt)
-#     return response
-
-async def execute_planning_phase(raw_prompt: str) -> Plan | None:
+async def execute_planning_phase(raw_prompt: str) -> InitialPlan | None:
 
     initial_input = POPrompt(prompt=raw_prompt, max_loops=3)
 
@@ -109,4 +94,13 @@ async def execute_planning_phase(raw_prompt: str) -> Plan | None:
 
     print("✅ Planning Phase Complete!\n\n\n\n\n")
     print(outputs)
-    return outputs[0] if outputs else None
+
+    if not outputs:
+        return None
+        
+    final_output = outputs[0]
+
+    if not isinstance(final_output.value, InitialPlan):
+        raise ValueError("Unexpected workflow output type: expected InitialPlan, got %s" % type(final_output.value))
+
+    return final_output.value
