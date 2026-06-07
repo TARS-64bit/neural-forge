@@ -11,7 +11,7 @@ from azure.search.documents.models import VectorizedQuery
 # We use a Class because it shares dependencies (the clients) 
 # exactly as recommended in the "class with multiple function tools" section of the docs.
 class CodebaseSearchTools:
-    def __init__(self) -> None:
+    def __init__(self, index_name: str) -> None:
         """Initialize the Azure clients once so they can be reused."""
         self.oai_client = AzureOpenAI(
             api_key=os.getenv("AZURE_OPENAI_KEY"),
@@ -20,7 +20,7 @@ class CodebaseSearchTools:
         )
         self.search_client = SearchClient(
             endpoint=os.getenv("AZURE_SEARCH_ENDPOINT", ""),
-            index_name=os.getenv("AZURE_SEARCH_INDEX", "codebase-search-index"),
+            index_name=index_name,
             credential=DefaultAzureCredential()
         )
         self.embed_model = os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT", "text-embedding-3-small")

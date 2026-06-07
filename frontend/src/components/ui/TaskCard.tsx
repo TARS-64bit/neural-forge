@@ -1,6 +1,6 @@
 export function TaskCard({ task }: { task: any }) {
     return (
-        <div className="p-5 bg-zinc-900/80 border border-zinc-800 rounded-xl space-y-3 hover:border-zinc-700 transition-colors">
+        <div className="p-5 bg-zinc-900/80 border border-zinc-800 backdrop-blur-lg rounded-xl space-y-3 hover:border-zinc-700 transition-colors">
             <div className="flex items-center justify-between">
                 <span className="px-2 py-1 bg-zinc-800 rounded text-xs font-mono text-zinc-400">{task.id}</span>
                 <span className="px-2 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-full text-[10px] uppercase font-bold tracking-wider">
