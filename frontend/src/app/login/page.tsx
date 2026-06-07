@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Key, ChevronRight } from "lucide-react";
+import { Cpu, Key, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -54,7 +53,7 @@ export default function LoginPage() {
                 {/* Header */}
                 <div className="flex flex-col items-center justify-center text-center space-y-4">
                     <div className="p-3 bg-cyan-500/10 rounded-xl border border-cyan-500/20">
-                        <Image src="/neural-forge-forge-logo.svg" alt="Neural Forge logo" width={32} height={32} />
+                        <Cpu className="w-8 h-8 text-cyan-400" />
                     </div>
                     <div>
                         <h1 className="text-2xl font-medium tracking-tight">Neural Forge</h1>
