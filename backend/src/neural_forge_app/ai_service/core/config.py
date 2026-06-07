@@ -20,7 +20,6 @@ azure_openai_embedding_model = os.getenv("AZURE_OPENAI_EMBEDDING_MODEL", "text-e
 
 knowledge_source_name = os.getenv("AZURE_SEARCH_KNOWLEDGE_SOURCE_NAME")
 project_connection_name = os.getenv("PROJECT_CONNECTION_NAME")
-index_name = os.getenv("AZURE_SEARCH_INDEX")
 base_name = os.getenv("AZURE_SEARCH_KNOWLEDGE_BASE_NAME")
 
 # Azure clients / credentials

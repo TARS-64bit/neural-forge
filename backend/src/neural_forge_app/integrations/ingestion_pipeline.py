@@ -11,20 +11,19 @@ azure_openai_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
 azure_openai_embedding_deployment = os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT", "text-embedding-3-small")
 azure_openai_embedding_model = os.getenv("AZURE_OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
 
-# Import only your index builder and uploader
-from neural_forge_app.ai_service.core.config import index_name
+# Import only index builder and uploader
 from .index_builder import build_and_create_index
 from .uploader import upload_code
 
-def ingest_codebase(create_index: bool = True, code_chunks: list | None = None):
+def ingest_codebase(index_name: str, create_index: bool = True, code_chunks: list | None = None):
     """Orchestrate index creation and code upload."""
     
     if create_index:
-        build_and_create_index()
+        build_and_create_index(index_name)
         print(f"Index '{index_name}' created or updated successfully")
         
     if code_chunks is not None:
-        upload_code(code_chunks)
+        upload_code(index_name, code_chunks)
         print(f"Uploaded {len(code_chunks)} code chunks to index '{index_name}'")
         
     print("Codebase ingestion complete!")

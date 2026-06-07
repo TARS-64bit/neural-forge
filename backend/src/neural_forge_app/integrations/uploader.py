@@ -1,9 +1,9 @@
 from azure.search.documents import SearchIndexingBufferedSender
 
-from  neural_forge_app.ai_service.core.config import endpoint, credential, index_name
+from  neural_forge_app.ai_service.core.config import endpoint, credential
 
 
-def upload_code(code_chunks: list | None = None) -> None:
+def upload_code(index_name: str, code_chunks: list | None = None) -> None:
 
     if not code_chunks:
         print("No code chunks to upload.")
@@ -18,4 +18,4 @@ def upload_code(code_chunks: list | None = None) -> None:
         return
 
     with SearchIndexingBufferedSender(endpoint=endpoint, index_name=index_name, credential=credential) as client:
-        client.upload_documents(documents=code_chunks)
+        client.upload_documents(index_name=index_name , documents=code_chunks)

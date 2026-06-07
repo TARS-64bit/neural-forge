@@ -13,11 +13,7 @@ async def mark_task_atomic(response: AgentExecutorResponse, ctx: WorkflowContext
     Ensures types are correct, toggles `is_sufficiently_atomic` on the current
     task and advances the `curr_index` so subsequent iterations proceed.
     """
-    logger.debug("Marking task as atomic: %s", response.agent_response.value)
-    if not response.agent_response.value:
-        logger.exception("mark_task_atomic: missing response content")
-        raise ValueError("response content state not found or of wrong type")
-
+    
     iteration_state = ctx.get_state("iteration_state")
     plan = ctx.get_state("plan")
 

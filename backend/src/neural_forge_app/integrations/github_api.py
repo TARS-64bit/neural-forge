@@ -1,13 +1,9 @@
-import os
 import tempfile
 from contextlib import contextmanager
 from git import Repo
 
-# Load from your .env file
-GITHUB_PAT = os.getenv("GITHUB_PAT") 
-
 @contextmanager
-def ephemeral_clone(repo_owner: str, repo_name: str, branch: str = "main"):
+def ephemeral_clone(repo_owner: str, repo_name: str, branch: str = "main", pat: str = ""):
     """
     Clones a GitHub repo into a temporary, isolated directory on the server.
     Cleans up automatically when the process is done.
@@ -18,7 +14,7 @@ def ephemeral_clone(repo_owner: str, repo_name: str, branch: str = "main"):
     
     # 1. Construct a secure HTTPS URL using the Personal Access Token (PAT)
     # This prevents the need to store SSH keys on the server
-    repo_url = f"https://{GITHUB_PAT}@github.com/{repo_owner}/{repo_name}.git"
+    repo_url = f"https://{pat}@github.com/{repo_owner}/{repo_name}.git"
     
     # 2. Create a secure, unique temporary directory
     temp_dir = tempfile.mkdtemp(prefix=f"agent_workspace_{repo_name}_")

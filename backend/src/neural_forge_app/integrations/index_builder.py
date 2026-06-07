@@ -7,13 +7,13 @@ from azure.search.documents.indexes.models import (
 )
 
 from neural_forge_app.ai_service.core.config import (
-    endpoint, credential, index_name,
+    endpoint, credential,
     azure_openai_endpoint, azure_openai_embedding_deployment,
     azure_openai_embedding_model
 )
 
 
-def build_and_create_index():
+def build_and_create_index(index_name: str):
     if not index_name:
         raise ValueError("Azure Search index name is not set. Please set the AZURE_SEARCH_INDEX environment variable.")
     

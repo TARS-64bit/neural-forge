@@ -4,10 +4,10 @@ from neural_forge_app.ai_service.agents.pm_agent.instructions import build_pm_in
 from neural_forge_app.ai_service.models.shared_responses import InitialPlan
 from neural_forge_app.ai_service.tools.codebase_search_tools.get_code_search_tool import CodebaseSearchTools
 
-def create_pm_agent():
+def create_pm_agent(index_name: str):
         """Initializes the inner MAF Agent with client and instructions."""
         client = get_foundary_client()
-        search_tools = CodebaseSearchTools()
+        search_tools = CodebaseSearchTools(index_name=index_name)
         
         return Agent(
             name="PMAgent",
