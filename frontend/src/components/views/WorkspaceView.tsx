@@ -35,7 +35,9 @@ export function WorkspaceView({
     onReindex,
     isReindexing,
     onDisconnect,
-    maxLoops, onSaveSettings
+    maxLoops, onSaveSettings,
+    onExport, isExporting,
+    onUpdateTask
 }: Readonly<{
     history: ChatTurn[];
     featurePrompt: string;
@@ -50,6 +52,9 @@ export function WorkspaceView({
     onDisconnect?: () => void;
     maxLoops: number;
     onSaveSettings: (newBranch: string, newMaxLoops: number) => void;
+    onExport?: (tasks: any | any[]) => void;
+    isExporting?: boolean;
+    onUpdateTask?: (turnId: string, taskId: string, updatedTask: any | null) => void;
 }>) {
     const { githubUrl, githubBranch } = useSelector((state: AppRootState) => state.repo);
     const [showSettingsModal, setShowSettingsModal] = useState(false);
@@ -109,7 +114,7 @@ export function WorkspaceView({
                         }}
                     />
 
-                    <ChatTimeline history={history} onRetry={onRetry} />
+                    <ChatTimeline history={history} onRetry={onRetry} onExport={onExport} isExporting={isExporting} onUpdateTask={onUpdateTask} />
 
                     <ChatInput
                         featurePrompt={featurePrompt}

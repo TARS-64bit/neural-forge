@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { User, Sparkles, AlertCircle, RefreshCw, ChevronDown, Layers } from "lucide-react";
+import { User, Sparkles, AlertCircle, RefreshCw, ChevronDown, Layers, GitCommitIcon } from "lucide-react";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -9,11 +9,14 @@ import type { ChatTurn, PlanData } from "@/components/views/WorkspaceView";
 
 type PlanTask = Record<string, unknown>;
 
-export function ChatTurnRow({ turn, onRetry }: Readonly<{ turn: ChatTurn; onRetry: (failedPrompt: string) => void }>) {
+export function ChatTurnRow({ turn, onRetry, onExport, isExporting, onUpdateTask }: Readonly<{
+    turn: ChatTurn; onRetry: (failedPrompt: string) => void, onExport?: (tasks: any | any[]) => void;
+    isExporting?: boolean; onUpdateTask?: (turnId: string, taskId: string, updatedTask: any | null) => void;
+}>) {
     return (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 mt-4">
             <UserBubble prompt={turn.prompt} />
-            <AgentBubble turn={turn} onRetry={onRetry} />
+            <AgentBubble turn={turn} onRetry={onRetry} onExport={onExport} isExporting={isExporting} onUpdateTask={onUpdateTask} />
         </motion.div>
     );
 }
@@ -31,7 +34,10 @@ function UserBubble({ prompt }: Readonly<{ prompt: string }>) {
     );
 }
 
-function AgentBubble({ turn, onRetry }: Readonly<{ turn: ChatTurn; onRetry: (failedPrompt: string) => void }>) {
+function AgentBubble({ turn, onRetry, onExport, isExporting, onUpdateTask }: Readonly<{
+    turn: ChatTurn; onRetry: (failedPrompt: string) => void, onExport?: (tasks: any | any[]) => void;
+    isExporting?: boolean; onUpdateTask?: (turnId: string, taskId: string, updatedTask: any | null) => void;
+}>) {
     const isError = turn.status === "error";
 
     return (
@@ -42,7 +48,14 @@ function AgentBubble({ turn, onRetry }: Readonly<{ turn: ChatTurn; onRetry: (fai
 
             <div className="flex-1 space-y-4">
                 {turn.status === "planning" && <PlanningStepper logs={turn.logs} />}
-                {turn.status === "completed" && turn.planData && <CompletedPlan planData={turn.planData} />}
+                {turn.status === "completed" && turn.planData &&
+                    <CompletedPlan
+                        turnId={turn.id}
+                        planData={turn.planData}
+                        onExport={onExport}
+                        isExporting={isExporting}
+                        onUpdateTask={onUpdateTask}
+                    />}
 
                 {isError && (
                     <Card className="!bg-red-500/5 !border-red-500/20 !p-5">
@@ -145,7 +158,10 @@ function PlanningStepper({ logs = [] }: Readonly<{ logs?: string[] }>) {
     );
 }
 
-function CompletedPlan({ planData }: Readonly<{ planData: PlanData }>) {
+function CompletedPlan({ turnId, planData, onExport, isExporting, onUpdateTask }: Readonly<{
+    turnId: string; planData: PlanData; onExport?: (tasks: any | any[]) => void;
+    isExporting?: boolean; onUpdateTask?: (turnId: string, taskId: string, updatedTask: any | null) => void;
+}>) {
     return (
         <div className="space-y-6">
             <Card className="!bg-zinc-900/40 !p-5">
@@ -154,12 +170,32 @@ function CompletedPlan({ planData }: Readonly<{ planData: PlanData }>) {
             </Card>
 
             <div className="space-y-4">
-                <h3 className="text-md font-medium flex items-center gap-2">
-                    <Layers className="w-4 h-4" /> Execution Plan
-                </h3>
+                <div className="flex items-center justify-between">
+                    <h3 className="text-md font-medium flex items-center gap-2">
+                        <Layers className="w-4 h-4" /> Execution Plan
+                    </h3>
+
+                    {/* EXPORT ALL BUTTON */}
+                    {onExport && (
+                        <Button
+                            variant="outline"
+                            className="!py-1 !px-2 text-xs backdrop-blur-sm"
+                            onClick={() => onExport(planData.tasks)}
+                            isLoading={isExporting}
+                        >
+                            <GitCommitIcon className="w-3 h-3" /> Export All
+                        </Button>
+                    )}
+                </div>
+
                 <div className="grid gap-3">
-                    {planData.tasks?.map((task: PlanTask, index: number) => (
-                        <TaskCard key={index} task={task} />
+                    {planData.tasks?.map((task: any, index: number) => (
+                        <TaskCard
+                            key={index}
+                            task={task}
+                            onExport={() => onExport?.(task)}
+                            onUpdate={(updatedTask: any | null) => onUpdateTask?.(turnId, task.id, updatedTask)}
+                        />
                     ))}
                 </div>
             </div>

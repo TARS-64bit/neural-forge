@@ -1,4 +1,5 @@
-import { Settings, Cpu } from "lucide-react";
+import { Settings } from "lucide-react";
+import Image from "next/image";
 
 export function WorkspaceHeader({
     githubUrl,
@@ -12,7 +13,7 @@ export function WorkspaceHeader({
     return (
         <header className="w-full p-4 flex justify-between items-center sticky top-0 backdrop-blur-lg rounded-b-2xl border-2 border-t-0 border-white/10 bg-black/10 z-40">
             <div className="flex gap-3 items-center">
-                <div className="p-2 bg-black/40 rounded-lg border border-white/10"><Cpu className="w-5 h-5 text-cyan-400" /></div>
+                <Image src="/neural-forge-forge-logo.svg" alt="Neural Forge logo" width={32} height={32} />
                 <h1 className="text-xl font-light tracking-tight">Neural Forge</h1>
             </div>
 

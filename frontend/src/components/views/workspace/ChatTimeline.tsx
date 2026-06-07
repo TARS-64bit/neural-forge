@@ -6,9 +6,14 @@ import { ChatTurnRow } from "@/components/views/workspace/ChatTurnRow";
 export function ChatTimeline({
     history,
     onRetry,
+    onExport, isExporting,
+    onUpdateTask
 }: Readonly<{
     history: ChatTurn[];
     onRetry: (failedPrompt: string) => void;
+    onExport?: (tasks: any | any[]) => void;
+    isExporting?: boolean;
+    onUpdateTask?: (turnId: string, taskId: string, updatedTask: any | null) => void;
 }>) {
     const endOfMessagesRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +28,12 @@ export function ChatTimeline({
                     Workspace ready. Describe your first feature to begin.
                 </div>
             ) : (
-                history.map((turn) => <ChatTurnRow key={turn.id} turn={turn} onRetry={onRetry} />)
+                history.map((turn) => <ChatTurnRow key={turn.id}
+                    turn={turn} onRetry={onRetry}
+                    onExport={onExport}
+                    isExporting={isExporting}
+                    onUpdateTask={onUpdateTask}
+                />)
             )}
             <div ref={endOfMessagesRef} />
         </div>

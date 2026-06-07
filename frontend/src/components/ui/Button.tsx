@@ -13,7 +13,7 @@ export function Button({ children, variant = "primary", isLoading, className = "
     const variants = {
         primary: "bg-black/50 text-white/70 hover:bg-black hover:text-white hover:shadow-[0_0_10px_0px_rgb(255,255,255,0.1)]",
         secondary: "bg-[#2C5EAD] text-white hover:bg-[#1591DC]",
-        outline: "bg-transparent border border-zinc-800 text-zinc-300 hover:bg-zinc-900"
+        outline: "bg-transparent border border-zinc-800 text-zinc-300 hover:bg-black/50"
     };
 
     return (

@@ -146,6 +146,80 @@ export default function WorkspacePage() {
         }
     });
 
+    const formatTaskToMarkdown = (task: any) => {
+        let body = `**Type:** ${task.type}\n\n${task.description}\n\n`;
+        if (task.acceptance_criteria?.length) {
+            body += `### Acceptance Criteria\n`;
+            task.acceptance_criteria.forEach((crit: string) => {
+                body += `- [ ] ${crit}\n`; // Markdown checkboxes!
+            });
+        }
+        if (task.dependencies?.length) {
+            body += `\n**Dependencies:** ${task.dependencies.join(", ")}`;
+        }
+        return body;
+    };
+
+    const exportIssuesMutation = useMutation({
+        mutationFn: async (tasksToExport: any[]) => {
+            const issuesPayload = tasksToExport.map(t => ({
+                title: `[${t.type.toUpperCase()}] ${t.title}`,
+                body: formatTaskToMarkdown(t)
+            }));
+
+            const res = await fetch(`${API_BASE_URL}/api/export-issues`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    github_pat: githubPat,
+                    repo_owner: repoOwner,
+                    repo_name: repoName,
+                    issues: issuesPayload
+                }),
+            });
+            if (!res.ok) throw new Error("Failed to export issues");
+            return res.json();
+        },
+        onSuccess: (data) => {
+            alert(`Successfully created ${data.urls.length} GitHub Issue(s)!`);
+        },
+        onError: (err) => {
+            alert(`Error exporting issues: ${err.message}`);
+        }
+    });
+
+    const handleUpdateTask = (turnId: string, taskId: string, updatedTask: any | null) => {
+        setHistory((prev) => prev.map((turn) => {
+            if (turn.id === turnId && turn.planData) {
+                let newTasks;
+
+                if (updatedTask === null) {
+                    // DELETE task
+                    newTasks = turn.planData?.tasks?.filter((t: any) => t.id !== taskId);
+                } else {
+                    // EDIT task
+                    newTasks = turn.planData?.tasks?.map((t: any) =>
+                        t.id === taskId ? updatedTask : t
+                    );
+                }
+
+                return {
+                    ...turn,
+                    planData: { ...turn.planData, tasks: newTasks }
+                };
+            }
+            return turn;
+        }));
+    };
+
+
+    const handleExport = (tasks: any | any[]) => {
+        // Works for both a single task object OR an array of task objects
+        const tasksArray = Array.isArray(tasks) ? tasks : [tasks];
+        exportIssuesMutation.mutate(tasksArray);
+    };
+
+
     const handleSaveSettings = (newBranch: string, newMaxLoops: number) => {
         // 1. Update Redux immediately
         dispatch(setRepoDetails({
@@ -177,6 +251,9 @@ export default function WorkspacePage() {
                 onDisconnect={handleDisconnect}
                 maxLoops={maxLoops}
                 onSaveSettings={handleSaveSettings}
+                onExport={handleExport}
+                isExporting={exportIssuesMutation.isPending}
+                onUpdateTask={handleUpdateTask}
             />
         </main>
     );

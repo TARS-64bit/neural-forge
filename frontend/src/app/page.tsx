@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -9,7 +10,6 @@ import { setRepoDetails } from "@/store/repoSlice";
 import Cookies from "js-cookie";
 import { SetupView } from "@/components/views/SetupView";
 import { IngestingView } from "@/components/views/IngestingView";
-import { Cpu } from "lucide-react";
 import { API_BASE_URL } from "@/lib/config";
 
 export default function SetupPage() {
@@ -115,7 +115,9 @@ export default function SetupPage() {
   return (
     <main className="max-w-screen mx-auto p-0 flex flex-col items-center justify-center">
       <header className="w-full py-6 px-6 flex items-center gap-3 sticky top-0 z-50">
-        <div className="p-2 bg-cyan-500/10 rounded-lg border border-cyan-500/20"><Cpu className="w-5 h-5 " /></div>
+        <div className="p-2 bg-cyan-500/10 rounded-lg border border-cyan-500/20 flex items-center justify-center">
+          <Image src="/neural-forge-forge-logo.svg" alt="Neural Forge logo" width={32} height={32} />
+        </div>
         <h1 className="text-xl font-semibold tracking-tight">Neural Forge</h1>
       </header>
       <AnimatePresence mode="wait">
