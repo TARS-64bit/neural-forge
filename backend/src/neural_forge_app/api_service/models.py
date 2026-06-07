@@ -16,3 +16,13 @@ class FeaturePlanRequest(BaseModel):
         le=8, # Less than or equal to 8
         description="The maximum number of agentic decomposition loops. Must be between 1 and 8."
     )
+
+class GitHubIssue(BaseModel):
+    title: str
+    body: str
+
+class ExportIssuesRequest(BaseModel):
+    github_pat: str
+    repo_owner: str
+    repo_name: str
+    issues: list[GitHubIssue]
