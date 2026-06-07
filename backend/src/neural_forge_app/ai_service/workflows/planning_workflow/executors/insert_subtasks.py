@@ -13,10 +13,8 @@ async def insert_subtasks(response: AgentExecutorResponse, ctx: WorkflowContext[
     Validates the incoming subtasks, updates the current task's `subtasks`
     field, advances index, and emits the updated iteration state.
     """
-    logger.debug("Received subtasks from Refinement Agent: %s", response.agent_response.value)
 
-    if not response.agent_response.value or response.agent_response.value.tasks is None:
-        logger.exception("insert_subtasks: response missing tasks")
+    if not response.agent_response or not response.agent_response.value or response.agent_response.value.tasks is None:
         raise ValueError("response content state not found")
 
     iteration_state = ctx.get_state("iteration_state")
