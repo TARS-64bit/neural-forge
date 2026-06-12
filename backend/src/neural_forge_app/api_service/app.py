@@ -26,15 +26,19 @@ def create_app() -> FastAPI:
     
     origins_str = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
     
-    allowed_origins = [
-        origin.strip().strip('"').strip("'").rstrip("/") 
-        for origin in origins_str.split(",") 
-        if origin.strip()
-    ]
+    # allowed_origins = [
+    #     origin.strip().strip('"').strip("'").rstrip("/") 
+    #     for origin in origins_str.split(",") 
+    #     if origin.strip()
+    # ]
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=allowed_origins,
+         allow_origins=[
+            "https://neural-forge-v2-two.vercel.app", 
+            "http://localhost:3000",
+            "http://127.0.0.1:3000"
+        ],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
